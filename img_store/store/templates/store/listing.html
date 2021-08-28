@@ -1,0 +1,10 @@
+{% extends 'store/base.html' %}
+
+{% block title %}
+    Listes d'images
+{% endblock title %}
+     
+{% block images %}
+{% include 'store/list.html' with list_title='Tous nos images' %}
+    
+{% endblock images %}

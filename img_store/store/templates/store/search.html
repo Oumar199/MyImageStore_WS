@@ -1,6 +1,10 @@
 {% extends 'store/base.html' %}
+{% block title %}
+    R&eacute;sultat de la recherche
+{% endblock title %}
 {% block images %}
+
     <!-- {{message}} -->
-    {% include 'store/list.html'  with list_title = "Nos derniers images"%}
+    {% include 'store/list.html'  with list_title = "R&eacute;sultat de la recherche"%}
 {% endblock images %}
     

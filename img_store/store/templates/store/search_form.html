@@ -1,9 +1,14 @@
 <div class="col-lg-12 detail-separator">
-    <form class="col-md-6 col-md-offset-3 text-center" action="{% url 'store:search' %}" method="get" accept-charset="utf-8">
+    <form class=" mb-4 mt-4 col-md-6 col-md-offset-3 text-center" action="{% url 'store:search' %}" method="get" accept-charset="utf-8">
         <div class="form-group">
-            <label for="searchForm">Chercher une image</label>
+            <label for="searchForm" style="font-weight: 800;">Chercher une image <i class="ion-android-search""></i></label>
             <input id="searchForm" class="form-control" name="query">
         </div>
-        <span class="help-block" id="helpBlock">Trouvez l'image de votre à partir du Web.</span>
+        <span class="help-block" id="helpBlock">Trouvez l'image de votre choix à partir du Web.</span>
+        <br><button type="submit" class="btn btn-danger mt-3">Rechercher</button>
+        <br> <span class="text-danger">Ca peut prendre un peu de temps</span>
+        <div class="col-md-12 text-center">
+            <a href="{% url 'store:listing' %}" class="m-4 btn btn-primary  btn-lg">Accédez à la liste des images sauvegard&eacute;es</a>
+        </div>
     </form>
 </div>

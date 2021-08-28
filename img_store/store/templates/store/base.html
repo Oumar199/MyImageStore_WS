@@ -3,7 +3,13 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home - Brand</title>
+    <title>
+        
+        {% block title %}
+            
+        {% endblock title %}
+            
+    </title>
     {% load static %}
     <link rel="stylesheet" href= "{% static 'store/assets/bootstrap/css/bootstrap.min.css' %}">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,400,700">
@@ -12,31 +18,35 @@
 
 <body>
     <nav class="navbar navbar-dark navbar-expand-lg fixed-top bg-white portfolio-navbar gradient">
-        <div class="container"><a class="navbar-brand logo" href="#">Brand</a><button class="navbar-toggler" data-toggle="collapse" data-target="#navbarNav"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+        <div class="container"><a class="navbar-brand logo" href="{% url 'index' %}">MY IMAGE <i class="ion-android-image"></i> STORE</a><button class="navbar-toggler" data-toggle="collapse" data-target="#navbarNav"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
             <div class="collapse navbar-collapse"
                 id="navbarNav">
                 <ul class="nav navbar-nav ml-auto">
-                    <li class="nav-item" role="presentation"><a class="nav-link active" href="{% url 'index' %}">Home</a></li>
-                    <!-- <li class="nav-item" role="presentation"><a class="nav-link" href="projects-grid-cards.html">Projects</a></li> -->
+                    <li class="nav-item" role="presentation"><a class="nav-link active" href="{% url 'index' %}">ACCEUIL <i class="ion-android-home"></i></a></li>
+                    <li class="nav-item" role="presentation"><a class="nav-link" href="{% url 'store:listing' %}">IMAGES SAUVEGARD&Eacute;ES <i class="ion-aperture"></i></a></li>
                 </ul>
             </div>
         </div>
     </nav>
     <main class="page lanidng-page">
-        <section class="portfolio-block block-intro">
+        <!-- <section class="portfolio-block block-intro"> -->
             <!-- <div class="container">
                 <div class="avatar" style="background-image:url(&quot;{% static 'store/assets/img/avatars/avatar.jpg' %}&quot;);"></div>
                 <div class="about-me">
                     <p>Hello! I am <strong>John Smith</strong>. I work as interface and front end developer. I have passion for pixel perfect, minimal and easy to use interfaces.</p><a class="btn btn-outline-primary" role="button" href="#">Hire me</a></div>
             </div> -->
-        </section>
+        <!-- </section> -->
         <section class="portfolio-block photography">
             <div class="container">
-                
-                {% block head %}
+                <div class="heading">
+                    <h2>
+                        {% block head %}
                     
-                {% endblock head %}
-                    
+                        {% endblock head %}
+                 
+                    </h2>
+                </div>
+                       
                 <div class="row">
                     
                     {% block images %}
