@@ -32,10 +32,17 @@
     {% else %}
     {% for image in images %}
     <!-- url 'store:detail' image_id = image.id -->
-    <div class="col-md-6 col-lg-4">
-        <div class="card border-0"><a href="#"><img src="{{ image.src }}" alt="image.title" class="card-img-top scale-on-hover"></a>
+    <div class="col-md-6 col-lg-4 text-center">
+        <div class="card border-0"><a href="{{image.url}}"><img src="{{ image.src }}" alt="image.title" class="card-img-top scale-on-hover"></a>
             <div class="card-body">
-                <h6><a href="#">{{image.title}}</a></h6>
+                <h6><a href="{{image.url}}">{{image.title}}</a></h6>
+                <form style="box-shadow: none!important; padding: 8px!important" action="{% url 'store:save' %}" method="GET">
+                        <input type="hidden" name="title" value="{{image.title}}">
+                        <input type="hidden" name="categorie" value="{{image.categorie}}">
+                        <input type="hidden" name="src" value="{{image.src}}">
+                        <input type="hidden" name="url" value="{{image.url}}">
+                        <button type="button" class="btn btn-primary btn-block btn-lg">Sauvegarder</button>
+                </form>
                 <!-- <p class="text-muted card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc quam urna.</p> -->
             </div>
         </div>

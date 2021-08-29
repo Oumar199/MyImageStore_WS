@@ -51,20 +51,35 @@ def listing(request):
 #     return render(request, 'store/search.html', context)
     
 def search(request):
-    # options = webdriver.ChromeOtions()
-    # options.add_argument("--headless")
-    driver = webdriver.Chrome()
+    query = request.GET.get('query')
+    options = webdriver.ChromeOptions()
+    options.add_argument("--headless")
+    driver = webdriver.Chrome(options = options)
     url = "https://www.google.sn/imghp?hl=fr&ogbl"
     driver.get(url)
-    srcs = []
+    images_list = []
+    search = driver.find_element_by_tag_name('input')
+    search.clear()
+    search.send_keys(query)
+    search.send_keys(Keys.ENTER)
+    content = driver.page_source
+    try:
+        doc = BeautifulSoup(content, 'lxml')
+        imgs = [(a.find('img'), a.nextSibling) for a in doc.find('div', \
+            class_ = "mJxzWe").find_all('a', class_ = ['wXeWr', 'islib', 'nfEiy'])]
+        for img in imgs:
+            try:
+                rq.urlopen(img[0]['src'])
+                images_list.append({"src" : img[0]['src'], "title": img[1]['title'], "categorie": query, "url": img[1]['href']})
+                print("ok")
+            except Exception:
+                print("no ok")
+    except Exception:
+        raise Exception("Impossible de parser le lien")
     # for album in albums_list:
     #     artists = " et ".join([artist.name for artist in album.artists.all()])
-    #     search = driver.find_element_by_tag_name('input')
-    #     search.clear()
-    #     search.send_keys(album.title + " de " + artists)
     #     search.send_keys(Keys.ENTER)
     #     lien = driver.current_url
-    #     content = driver.page_source
     #     try:
     #         doc = BeautifulSoup(content, 'lxml')
     #         imgs = [img['src'] for img in doc.find_all('img')]
@@ -80,19 +95,24 @@ def search(request):
     #                 break;
     #     except Exception:
     #         pass
-    # paginator = Paginator(albums_list, 4)
+    # print(images_list)
+    # paginator = Paginator(images_list, 6)
     # page = request.GET.get('page')
     # try:
-    #     albums = paginator.page(page)
+        # images = paginator.page(page)
     # except PageNotAnInteger:
-    #     albums = paginator.page(1)
+        # images = paginator.page(1)
     # except EmptyPage:
-    #     albums = paginator.page(paginator.num_pages)
-    # title = "Résultats pour la requête %s"%query
+        # images = paginator.page(paginator.num_pages)
+    title = "Résultats pour la requête '%s'"%query
     context = {
-        # 'imagess': images,
+        'images': images_list,
         'paginate': True,
-        # 'title': title,
+        'title': title,
     }
-    # return render(request, 'store/search.html', context)
+    return render(request, 'store/search.html', context)
     
+    
+def save(request):
+    query = request.GET.get(request)
+    print(query)
