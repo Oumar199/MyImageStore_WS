@@ -1,3 +1,4 @@
+from django.http.response import JsonResponse
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from urllib import request as rq
@@ -104,7 +105,7 @@ def search(request):
         # images = paginator.page(1)
     # except EmptyPage:
         # images = paginator.page(paginator.num_pages)
-    title = "Résultats pour la requête '%s'"%query
+    title = "Résultats de la recherche '%s'"%query
     context = {
         'images': images_list,
         'paginate': True,
@@ -114,5 +115,7 @@ def search(request):
     
     
 def save(request):
-    query = request.GET.get(request)
-    print(query)
+    if request.is_ajax and request.method == 'GET':
+        query = request.GET.get("title")
+        return JsonResponse({"title": query}, status = 200)
+    return JsonResponse({'title': "nada"}, status = 200)

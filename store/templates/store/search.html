@@ -7,4 +7,29 @@
     <!-- {{message}} -->
     {% include 'store/list.html'  with list_title=title search="True"%}
 {% endblock images %}
+
+
+{% block javascript %}
+<script>
+    $(function(){
+        console.log("ready !")
+        $('.image_form_save').click(function (e) {
+            var form = $(this).parent()
+            var serialiseData = form.serialize() 
+            console.log('hello save button !')
+            $.ajax({
+                url: `{% url 'store:save'%}`,
+                type: 'get',
+                data: serialiseData,
+                sucess: (data) =>{
+                    console.log(data);
+                },
+                error: ()=>{
+                    console.log('Erreur relevée')
+                }
+            }) 
+        });
+    });
+</script>
+{% endblock javascript %}
     

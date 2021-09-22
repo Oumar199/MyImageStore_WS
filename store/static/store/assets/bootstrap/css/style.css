@@ -1,4 +1,3 @@
-form.no-shadow{
+.image_form{
     box-shadow: none!important;
-    background-color: blue;
 }
