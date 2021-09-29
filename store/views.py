@@ -8,8 +8,10 @@ from bs4 import BeautifulSoup
 from django.shortcuts import get_object_or_404, render
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from store.models import Image
+import traceback
+from django.contrib.auth.models import User
 # from .forms import ContactForm
-# from django.http import HttpResponse
+from django.http import HttpResponse
 # Create your views here.
 def index(request):
     message = "Salut tout le monde !"
@@ -115,7 +117,19 @@ def search(request):
     
     
 def save(request):
-    if request.is_ajax and request.method == 'GET':
-        query = request.GET.get("title")
-        return JsonResponse({"title": query}, status = 200)
-    return JsonResponse({'title': "nada"}, status = 200)
+    if request.is_ajax and request.method == 'POST':
+        title = request.POST.get("title")
+        categorie = request.POST.get("categorie")
+        src = request.POST.get("src")
+        url = request.POST.get("url")
+        if not Image.objects.filter(title = title, url = url).exists():
+            error = None
+            try:
+                Image.objects.create(title = title, categorie = categorie, src = src, url = url)
+            except Exception as e:
+                error = e
+            return JsonResponse({"Response": "OK !","title":title, "src":len(src), "categorie":categorie, "url":url, "error": str(error)}, status = 200)
+            # return HttpResponse("")
+        else:
+            return JsonResponse({"Response": "Image already saved !"}, status = 200)
+    return JsonResponse({"Response": "Not OK !"}, status = 404)

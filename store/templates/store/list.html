@@ -33,14 +33,15 @@
     {% for image in images %}
     <!-- url 'store:detail' image_id = image.id -->
     <div class="col-md-6 col-lg-4 text-center image">
-        <div class="card border-0"><a href="{{image.url}}"><img src="{{ image.src }}" alt="image.title" class="card-img-top scale-on-hover"></a>
+        <div class="card border-0"><a href="{{image.url}}" target = "blanck"><img src="{{ image.src }}" alt="image.title" class="card-img-top scale-on-hover"></a>
             <div class="card-body">
-                <h6><a class="image_title" href="{{image.url}}">{{image.title}}</a></h6>
+                <h6><a class="image_title" href="{{image.url}}" target = "blanck">{{image.title}}</a></h6>
                 <form class="image_form" style="box-shadow: none!important; padding: 8px!important" action="{% url 'store:save' %}" method="GET">
+                        {% csrf_token %}
                         <input type="hidden" name="title" value="{{image.title}}">
                         <input type="hidden" name="categorie" value="{{image.categorie}}">
-                        <input type="hidden" name="src" value="{{image.src}}">
                         <input type="hidden" name="url" value="{{image.url}}">
+                        <input type="hidden" name="src" value="{{image.src}}">
                         
                         {% if search|length_is:"4"%}
                             <button type="button" class="image_form_save btn btn-primary btn-block btn-lg">Sauvegarder</button>

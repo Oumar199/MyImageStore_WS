@@ -14,15 +14,23 @@
     $(function(){
         console.log("ready !")
         $('.image_form_save').click(function (e) {
-            var form = $(this).parent()
-            var serialiseData = form.serialize() 
-            console.log('hello save button !')
+            e.preventDefault();
+            var form = $(this).parent();
+            //var serialiseData = form.serialize() 
             $.ajax({
                 url: `{% url 'store:save'%}`,
-                type: 'get',
-                data: serialiseData,
-                sucess: (data) =>{
+                type: 'POST',
+                data: {
+                    title:form.find(`input[name="title"]`).val(),
+                    categorie:form.find(`input[name="categorie"]`).val(),
+                    src:form.find('input[name="src"]').val(),
+                    url:form.find(`input[name="url"]`).val(),
+                    csrfmiddlewaretoken: form.find("input[name=csrfmiddlewaretoken]").val()
+                },
+                success: (data)=>{
                     console.log(data);
+                    console.log("success");
+                    $(this).attr('disabled', 'True').text("Sauvegardée")
                 },
                 error: ()=>{
                     console.log('Erreur relevée')

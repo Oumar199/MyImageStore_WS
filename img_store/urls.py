@@ -25,7 +25,8 @@ urlpatterns = [
     path('', views.index, name = 'index'),
     path('store/', include('store.urls', namespace = 'store')),
     path('admin/', admin.site.urls),
-] + static(settings.STATIC_URL, document_root = settings.STATIC_ROOT)
+] 
+# + static(settings.STATIC_URL, document_root = settings.STATIC_ROOT)
 
 
 """
