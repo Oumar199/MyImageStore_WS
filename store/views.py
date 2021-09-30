@@ -57,7 +57,7 @@ def search(request):
     query = request.GET.get('query')
     options = webdriver.ChromeOptions()
     options.add_argument("--headless")
-    driver = webdriver.Chrome(options = options)
+    driver = webdriver.Chrome(executable_path="C:\chromedriver\chromedriver.exe", options = options)
     url = "https://www.google.sn/imghp?hl=fr&ogbl"
     driver.get(url)
     images_list = []

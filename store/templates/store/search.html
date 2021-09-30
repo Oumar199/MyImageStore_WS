@@ -29,8 +29,7 @@
                 },
                 success: (data)=>{
                     console.log(data);
-                    console.log("success");
-                    $(this).attr('disabled', 'True').text("Sauvegardée")
+                    $(this).addClass("btn-success").removeClass("btn-primary").attr('disabled', 'True').text("Sauvegardée")
                 },
                 error: ()=>{
                     console.log('Erreur relevée')
