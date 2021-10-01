@@ -1,3 +1,8 @@
 .image_form{
     box-shadow: none!important;
 }
+
+.pagination li{
+    display: inline-block!important;
+    margin: 20px;
+}

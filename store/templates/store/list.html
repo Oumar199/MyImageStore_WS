@@ -45,6 +45,8 @@
                         
                         {% if search|length_is:"4"%}
                             <button type="button" class="image_form_save btn btn-primary btn-block btn-lg">Sauvegarder</button>
+                        {% else %}
+                            <button type="button" class="image_form_delete btn btn-info btn-block btn-lg">Supprimer</button>
                         {% endif %}
                             
                 </form>
@@ -62,19 +64,19 @@
     
     {% if paginate %}
         <div class="clearfix"></div>
-        <div class="col-lg-12 w-100 text-center">
-
-            <nav class="w-100" aria-label = "">
-                <ul class="pagination">
-                    
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <nav class = "text-center" aria-label = "">
+                <ul class="pagination" style="display: block;">
                     {% if images.has_previous %}
-                        <li><a href="?page={{ images.previous_page_number }}" class="btn btn-primary">Précédent</a></li>
+                        <li style="display: inline-block;"><a href="?page={{ images.previous_page_number }}" class="btn btn-danger">Précédent</a></li>
+                    {% endif %}
+                    {% if images.has_previous and images.has_next %}
+                    <hr style="display: inline-block;clear: both;margin-bottom: 0; margin-left: 20px; margin-right:20px;height: 30px;width: 2px;background: darkblue;">
                     {% endif %}
                     
                     {% if images.has_next %}
-                        <li><a href="?page={{ images.next_page_number }}" class="btn btn-primary">Suivant</a></li>
+                        <li style="display: inline-block;"><a href="?page={{ images.next_page_number }}" class="btn btn-warning">Suivant</a></li>
                     {% endif %}
-                        
                 </ul>
             </nav>
         </div>

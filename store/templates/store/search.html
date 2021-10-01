@@ -28,7 +28,6 @@
                     csrfmiddlewaretoken: form.find("input[name=csrfmiddlewaretoken]").val()
                 },
                 success: (data)=>{
-                    console.log(data);
                     $(this).addClass("btn-success").removeClass("btn-primary").attr('disabled', 'True').text("Sauvegardée")
                 },
                 error: ()=>{

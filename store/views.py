@@ -1,6 +1,9 @@
 from django.http.response import JsonResponse
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 from urllib import request as rq
 import requests
 from PIL import Image
@@ -36,28 +39,12 @@ def listing(request):
         'paginate': True,
         }
     return render(request, 'store/listing.html', context)
-
-# def search(request):
-#     query = request.GET.get('query')
-#     if not query:
-#         albums = Album.objects.all()
-#     else:
-#         albums = Album.objects.filter(title__icontains = query)
-        
-#         if not albums.exists():
-#             albums = Album.objects.filter(artists__name__icontains = query)
-    # title = "Résultats pour la requête %s"%query
-#     context = {
-#         'albums': albums,
-#         'title': title,
-#     }
-#     return render(request, 'store/search.html', context)
-    
+ 
 def search(request):
     query = request.GET.get('query')
     options = webdriver.ChromeOptions()
     options.add_argument("--headless")
-    driver = webdriver.Chrome(executable_path="C:\chromedriver\chromedriver.exe", options = options)
+    driver = webdriver.Chrome(executable_path="C:\Program Files\chromedriver\chromedriver.exe", options = options)
     url = "https://www.google.sn/imghp?hl=fr&ogbl"
     driver.get(url)
     images_list = []
@@ -65,49 +52,42 @@ def search(request):
     search.clear()
     search.send_keys(query)
     search.send_keys(Keys.ENTER)
+    final_imgs = []
     content = driver.page_source
     try:
         doc = BeautifulSoup(content, 'lxml')
-        imgs = [(a.find('img'), a.nextSibling) for a in doc.find('div', \
-            class_ = "mJxzWe").find_all('a', class_ = ['wXeWr', 'islib', 'nfEiy'])]
+        imgs = []
+        for a in doc.find('div', class_ = "mJxzWe").find_all('a', class_ = ['wXeWr', 'islib', 'nfEiy']):
+            src = a.find('img')
+            imgs.append((a.find('img'), a.nextSibling))
+            try:
+                image = driver.find_element_by_css_selector("img[src = '{}']".format(src['src']))
+                image.click()
+                sous_lien = WebDriverWait(driver, 3).until(
+                    EC.presence_of_element_located((By.CSS_SELECTOR, "a.lxa62b.MIdC8d.So4Urb"))
+                )
+                sous_lien.click()
+                content = driver.page_source
+                doc = BeautifulSoup(content, 'lxml')
+                imgs.extend([(a.find('img'), a.nextSibling) for a in doc.find('div', \
+                    class_ = "mJxzWe").find_all('a', class_ = ['wXeWr', 'islib', 'nfEiy'])])
+                driver.back()
+                driver.back()
+            except Exception:
+                pass
         for img in imgs:
             try:
-                rq.urlopen(img[0]['src'])
-                images_list.append({"src" : img[0]['src'], "title": img[1]['title'], "categorie": query, "url": img[1]['href']})
-                print("ok")
+                if Image.objects.filter(title = img[1]['title']).exists(): 
+                    pass
+                else :
+                    rq.urlopen(img[0]['src'])
+                    images_list.append({"src" : img[0]['src'], "title": img[1]['title'], "categorie": query, "url": img[1]['href']})
             except Exception:
-                print("no ok")
-    except Exception:
-        raise Exception("Impossible de parser le lien")
-    # for album in albums_list:
-    #     artists = " et ".join([artist.name for artist in album.artists.all()])
-    #     search.send_keys(Keys.ENTER)
-    #     lien = driver.current_url
-    #     try:
-    #         doc = BeautifulSoup(content, 'lxml')
-    #         imgs = [img['src'] for img in doc.find_all('img')]
-    #         is_ok = False
-    #         for img in imgs:
-    #             try:
-    #                 Image.open(rq.urlopen(img))
-    #                 srcs.append(img)
-    #                 is_ok = True
-    #             except Exception:
-    #                 pass
-    #             if is_ok:
-    #                 break;
-    #     except Exception:
-    #         pass
-    # print(images_list)
-    # paginator = Paginator(images_list, 6)
-    # page = request.GET.get('page')
-    # try:
-        # images = paginator.page(page)
-    # except PageNotAnInteger:
-        # images = paginator.page(1)
-    # except EmptyPage:
-        # images = paginator.page(paginator.num_pages)
-    title = "Résultats de la recherche '%s'"%query
+                pass
+    except Exception as e:
+        raise Exception("Erreur trouvée : %s"%(e))
+    
+    title = "%d résultats pour la recherche '%s'"%(len(images_list), query)
     context = {
         'images': images_list,
         'paginate': True,
@@ -129,7 +109,23 @@ def save(request):
             except Exception as e:
                 error = e
             return JsonResponse({"Response": "OK !","title":title, "src":len(src), "categorie":categorie, "url":url, "error": str(error)}, status = 200)
-            # return HttpResponse("")
         else:
             return JsonResponse({"Response": "Image already saved !"}, status = 200)
     return JsonResponse({"Response": "Not OK !"}, status = 404)
+
+def delete(request):
+    if request.is_ajax and request.method == 'POST':
+        title = request.POST.get("title")
+        if Image.objects.filter(title = title).exists():
+            error = None
+            try:
+                Image.objects.filter(title = title).delete()
+            except Exception as e:
+                error = e
+            return JsonResponse({"Response": "OK !","title":title, "error": str(error)}, status = 200)
+        else:
+            return JsonResponse({"Response": "Image don't exist !"}, status = 200)
+    return JsonResponse({"Response": "Not OK !"}, status = 404)
+                
+                
+            

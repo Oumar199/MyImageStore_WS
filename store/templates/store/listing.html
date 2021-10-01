@@ -8,3 +8,30 @@
 {% include 'store/list.html' with list_title='Tous nos images' %}
     
 {% endblock images %}
+
+{% block javascript %}
+<script>
+    $(function(){
+        console.log("ready !")
+        $('.image_form_delete').click(function (e) {
+            e.preventDefault();
+            var form = $(this).parent();
+            //var serialiseData = form.serialize() 
+            $.ajax({
+                url: `{% url 'store:delete'%}`,
+                type: 'POST',
+                data: {
+                    title:form.find(`input[name="title"]`).val(),
+                    csrfmiddlewaretoken: form.find("input[name=csrfmiddlewaretoken]").val()
+                },
+                success: (data)=>{
+                    $(this).addClass("btn-danger").removeClass("btn-info").attr('disabled', 'True').text("Supprimée")
+                },
+                error: ()=>{
+                    console.log('Erreur relevée')
+                }
+            }) 
+        });
+    });
+</script>
+{% endblock javascript %}
