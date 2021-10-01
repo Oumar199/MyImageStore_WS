@@ -24,3 +24,10 @@
 </section>
 {% endblock présentation %}
     
+{% block javascript %}
+<script>
+    $(function(){
+       $(".search_form_group_input").trigger("focus")
+    });
+</script>
+{% endblock javascript %}
