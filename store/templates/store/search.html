@@ -13,6 +13,7 @@
 <script>
     $(function(){
         console.log("ready !")
+        $('body').append(`<button class = "btn btn-primary" style = "position: fixed; bottom: 13px; right: 13px; font-size: 32px"><i class="ion-android-arrow-dropup-circle"></i></button>`)
         $('.image_form_save').click(function (e) {
             e.preventDefault();
             var form = $(this).parent();

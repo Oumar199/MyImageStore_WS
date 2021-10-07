@@ -44,7 +44,7 @@ def search(request):
     query = request.GET.get('query')
     options = webdriver.ChromeOptions()
     options.add_argument("--headless")
-    driver = webdriver.Chrome(executable_path="C:\Program Files\chromedriver\chromedriver.exe", options = options)
+    driver = webdriver.Chrome(executable_path="C:\Program Files\chromedriver\chromedriver.exe", options=options)
     url = "https://www.google.sn/imghp?hl=fr&ogbl"
     driver.get(url)
     images_list = []
@@ -63,7 +63,7 @@ def search(request):
             try:
                 image = driver.find_element_by_css_selector("img[src = '{}']".format(src['src']))
                 image.click()
-                sous_lien = WebDriverWait(driver, 3).until(
+                sous_lien = WebDriverWait(driver, 2).until(
                     EC.presence_of_element_located((By.CSS_SELECTOR, "a.lxa62b.MIdC8d.So4Urb"))
                 )
                 sous_lien.click()
