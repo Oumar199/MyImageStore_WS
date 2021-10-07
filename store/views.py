@@ -26,7 +26,7 @@ def index(request):
 def listing(request):
     # Initialisation du driver 
     images_list = Image.objects.all().order_by('id')
-    paginator = Paginator(images_list, 6)
+    paginator = Paginator(images_list, 9    )
     page = request.GET.get('page')
     try:
         images = paginator.page(page)
