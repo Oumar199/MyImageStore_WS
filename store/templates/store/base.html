@@ -17,6 +17,11 @@
     <link rel="stylesheet" href="{% static 'store/assets/fonts/ionicons.min.css' %}">
     <script src="{% static 'store/assets/js/jquery.js'%}"></script>
     <script src="{% static 'store/assets/js/mainscript.js'%}"></script>
+    
+    {% block style %}
+        
+    {% endblock style %}
+        
 </head>
 
 <body>
@@ -44,7 +49,7 @@
                     </h2>
                 </div>
                        
-                <div class="row">
+                <div class="row reveal">
                     
                     {% block images %}
                         

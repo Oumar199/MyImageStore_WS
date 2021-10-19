@@ -32,8 +32,13 @@
     {% else %}
     {% for image in images %}
     <!-- url 'store:detail' image_id = image.id -->
-    <div class="col-md-6 col-lg-4 text-center image">
-        <div class="card border-0"><a href="{{image.url}}" target = "blanck"><img src="{{ image.src }}" alt="image.title" class="card-img-top scale-on-hover"></a>
+    
+    <!-- {% if forloop.counter > 30 and not search|length_is:"4"%}
+        <div class="col-md-6 col-lg-4 text-center image reveal">
+    {% else %} -->
+        <div class="col-md-6 col-lg-4 text-center image">
+    <!-- {% endif %} -->
+        <div class="card border-0 reveal_1"><a href="{{image.url}}" target = "blanck"><img src="{{ image.src }}" alt="image.title" class="card-img-top scale-on-hover"></a>
             <div class="card-body">
                 <h6><a class="image_title" href="{{image.url}}" target = "blanck">{{image.title}}</a></h6>
                 <form class="image_form" style="box-shadow: none!important; padding: 8px!important" action="{% url 'store:save' %}" method="GET">
@@ -54,6 +59,7 @@
             </div>
         </div>
     </div>
+    
     <!-- {% if forloop.counter|divisibleby:3 %}
     <div class="clearfix"></div> 
     {% endif %} -->
