@@ -5,9 +5,9 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from urllib import request as rq
+# from urllib import request as rq
 # import requests
-from PIL import Image
+# from PIL import Image
 from bs4 import BeautifulSoup
 from django.shortcuts import get_object_or_404, render
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
@@ -46,7 +46,16 @@ def listing(request):
     
 
 def search(request):
+    """ Cette méthode doit récupérer les mots clés de la recherche et utiliser le web-Scraping pour prendre toutes 
+    les résultats de Google Image correspondant aux termes de la recherche. Les résultats devront être retournés au gabarit
+    search.html
+    Args:
+        request : la requête envoyée au serveur de Django à l'aide de la méthode GET
+    
+    """
+    #On vérifie si la méthode employée est GET
     if request.method == "GET":
+        # Récupération des mots clés
         query = request.GET.get('query', '')
         options = webdriver.ChromeOptions()
         options.add_argument("--headless")
@@ -61,32 +70,36 @@ def search(request):
         content = driver.page_source
         try:
             doc = BeautifulSoup(content, 'lxml')
-            imgs = []
-            links = [a for a in doc.find('div', class_ = "mJxzWe").find_all('a', class_ = ['wXeWr', 'islib', 'nfEiy'])]
+            links = [a for a in doc.find('div', class_ = "OcgH4b").find_all('a', class_ = ['wXeWr', 'islib', 'nfEiy'])]
             for a in links:
                 src = a.find('img')
-                imgs.append((a.find('img'), a.nextSibling))
+                img = ((a.find('img'), a.nextSibling))
                 try:
-                    image = driver.find_element_by_css_selector("img[src = '{}']".format(src['src']))
-                    image.click()
-                    try:
-                        sous_lien = WebDriverWait(driver, 0.6).until(
-                            EC.presence_of_element_located((By.CSS_SELECTOR, "a.lxa62b.MIdC8d.So4Urb"))
-                        ) 
-                        # sous_lien = driver.find_element_by_css_selector("a.lxa62b.MIdC8d.So4Urb")
-                        sous_lien.click()
-                        content = driver.page_source
-                        doc = BeautifulSoup(content, 'lxml')
-                        imgs.extend([(a.find('img'), a.nextSibling) for a in doc.find('div', \
-                            class_ = "mJxzWe").find_all('a', class_ = ['wXeWr', 'islib', 'nfEiy'])])
-                        driver.back()
-                    except Exception:
-                        pass   
-                    driver.back()
+                    if (not Image.objects.filter(title = img[1]['title']).exists()):                         
+                            images_list.append({"src" : img[0]['src'], "title": img[1]['title'], "categorie": query, "url": img[1]['href']})
                 except Exception:
                     pass
-                if imgs.__len__() > 60:
-                    break
+                try:
+                    image = driver.find_element_by_css_selector(f"img[src = '{src['src']}']")
+                    image.click()
+                    WebDriverWait(driver, 0.6).until(
+                        EC.presence_of_element_located((By.CSS_SELECTOR, "a.lxa62b.MIdC8d.So4Urb"))
+                    ) 
+                    # sous_lien = driver.find_element_by_css_selector("a.lxa62b.MIdC8d.So4Urb")
+                    # sous_lien.click()
+                    content = driver.page_source
+                    doc = BeautifulSoup(content, 'lxml')
+                    for a2 in doc.find('div', {'id': 'islsp'}).find_all('a', class_ = ['wXeWr', 'islib', 'nfEiy']):
+                        img = ((a2.find('img'), a2.nextSibling))
+                        try:
+                            if (not Image.objects.filter(title = img[1]['title']).exists()):                         
+                                    images_list.append({"src" : img[0]['src'], "title": img[1]['title'], "categorie": query, "url": img[1]['href']})
+                        except Exception:
+                            pass
+                except Exception:
+                    pass
+                # if imgs.__len__() > 100:
+                #     break
             # for i in range(200):
             #     content = driver.page_source
             #     doc = BeautifulSoup(content, 'lxml')
@@ -106,15 +119,15 @@ def search(request):
             #     except Exception:
             #         pass
             
-            for img in imgs:
-                try:
-                    if Image.objects.filter(title = img[1]['title']).exists(): 
-                        pass
-                    else :
-                        rq.urlopen(img[0]['src'])
-                        images_list.append({"src" : img[0]['src'], "title": img[1]['title'], "categorie": query, "url": img[1]['href']})
-                except Exception:
-                    pass
+            # for img in imgs:
+            #     try:
+            #         if Image.objects.filter(title = img[1]['title']).exists(): 
+            #             pass
+            #         else :
+            #             rq.urlopen(img[0]['src'])
+            #             images_list.append({"src" : img[0]['src'], "title": img[1]['title'], "categorie": query, "url": img[1]['href']})
+            #     except Exception:
+            #         pass
         except Exception as e:
             raise Exception("Erreur trouvée : %s"%(e))
     # page = request.GET.get('page', 1)

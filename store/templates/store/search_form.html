@@ -4,11 +4,20 @@
             <label for="searchForm" style="font-weight: 800;">Chercher une image <i class="ion-android-search""></i></label>
             <input id="searchForm" class="form-control search_form_group_input" name="query" required>
         </div>
+        
+        <!-- {% if title == 'index' %} -->
         <span class="help-block" id="helpBlock">Trouvez l'image de votre choix à partir du Web.</span>
-        <br><button type="submit" class="btn btn-danger mt-3">Rechercher</button>
+        <!-- {% endif %} -->
+            
+        <br><button type="submit" class="btn btn-danger mt-1">Rechercher</button>
         <br> <span class="text-danger">Ca peut prendre quelques instants</span>
+       
+        <!-- {% if title == 'index' %} -->
+       
         <div class="col-md-12 text-center">
             <a href="{% url 'store:listing' %}" class="m-4 btn btn-primary  btn-lg">Accédez à la liste des images sauvegard&eacute;es</a>
         </div>
+        <!-- {% endif %} -->
+
     </form>
 </div>
