@@ -25,6 +25,7 @@
 {% block javascript %}
 <script>
     $(function(){
+        console.log("{{ title }}")
         $('body').append(`<button class = "dropup btn btn-primary" style = "position: fixed; display: none; bottom: 13px; right: 13px; font-size: 32px"><i class="ion-android-arrow-dropup-circle"></i></button>`)
         if($(window).scrollTop() > 500){
             $('.dropup').show()
@@ -74,6 +75,7 @@
                     csrfmiddlewaretoken: form.find("input[name=csrfmiddlewaretoken]").val()
                 },
                 success: (data)=>{
+                    console.log(data)
                     $(this).addClass("btn-success").removeClass("btn-primary").attr('disabled', 'True').text("Sauvegardée")
                 },
                 error: ()=>{
