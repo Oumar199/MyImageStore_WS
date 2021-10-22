@@ -5,3 +5,7 @@ Ce projet a pour but d'utiliser le web scraping (grattage de toile), qui est une
 
 
 ![Screenshot 2021-10-22 002942](https://user-images.githubusercontent.com/83582338/138374808-96318fd1-1243-48eb-821b-7a22087601c0.png)
+
+
+https://user-images.githubusercontent.com/83582338/138374982-4d937541-c2f3-4369-9c31-8a65f40676c2.mp4
+
