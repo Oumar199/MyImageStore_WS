@@ -17,29 +17,41 @@ Ce projet a pour but d'utiliser le web scraping (grattage de toile), qui est une
 ### Interface Résultats Recherche - Titre et scroll
 ![Résultat_recherche_titre_images](https://user-images.githubusercontent.com/83582338/138562433-53246ad7-33a3-454e-ae55-4fee4a4741c6.png)
 ### Interface Résultats Recherche - Bouton remonter et clique sur image
-![image](https://user-images.githubusercontent.com/83582338/138562460-498fff63-3226-4932-9c19-5686f753460c.png)
+![Résultat_recherche_cliquer_sur_image](https://user-images.githubusercontent.com/83582338/138562684-6e1d81fc-b872-48f0-9d74-c9846ed78016.png)
+
 ### Interface Résultats Recherche – Page source d’une image
- ![image](https://user-images.githubusercontent.com/83582338/138562474-5d0ec65c-05f3-44ca-8ebf-6428468f1d2f.png)
+![Résultat_recherche_page_source](https://user-images.githubusercontent.com/83582338/138562709-2ca8b34b-e14b-4060-bb45-7ad0722c8729.png)
+
 ### Interface Résultats Recherche – Sauvegarder une image
-![image](https://user-images.githubusercontent.com/83582338/138562488-89af8d18-fb90-4a7d-8151-1f71c53728b5.png)
+![Résultat_recherche_image_sauvegardée_1](https://user-images.githubusercontent.com/83582338/138562722-581c0440-3c1f-4dab-918b-3d1fba9bcff0.png)
+
 ### Interface Résultats Recherche – Répertoires pour images sauvegardées
-![image](https://user-images.githubusercontent.com/83582338/138562504-518e64c9-f9fd-4fe6-ad25-38eb17eb5950.png)
+![Images_sauvegardées_nouveau_dossier_renard](https://user-images.githubusercontent.com/83582338/138562743-a8bb2d57-7535-4230-808d-9b031ca75534.png)
+
 ### Interface Résultats Recherche – Images dans répertoire
-![image](https://user-images.githubusercontent.com/83582338/138562516-e7b6565a-2fcd-4ed8-88ae-d2dde00763a5.png)
+![Images_sauvegardées_dossier_renard](https://user-images.githubusercontent.com/83582338/138562754-cec48528-b8ee-4434-8ff1-d4b3dca613d8.png)
+
 ### Interface Images Sauvegardées - Clique sur le lien Images sauvegardées, titre et scroll
-![image](https://user-images.githubusercontent.com/83582338/138562525-b0ae257f-ac25-4199-9225-c2e477a8b19b.png)
+![Images_sauvegardées_clique_sur_lien](https://user-images.githubusercontent.com/83582338/138562762-bbc9ad84-5f5d-4766-b817-0dab224c4506.png)
+
 ### Interface Images Sauvegardées - Bas de la première page
-![image](https://user-images.githubusercontent.com/83582338/138562539-b3bff181-d316-4834-8eb6-71b13902c898.png)
+![Images_sauvegardées_defiler_vers_bas](https://user-images.githubusercontent.com/83582338/138562774-4f24e86f-1bb8-43b9-8674-5604a74e7a4d.png)
+
 ### Interface Images Sauvegardées – Accès à page source image sauvegardée
-![image](https://user-images.githubusercontent.com/83582338/138562549-411bd0cf-0c0c-4103-9f37-c8c055e2bac2.png)
+![Images_sauvegardées_clique_sur_image](https://user-images.githubusercontent.com/83582338/138562790-bd584e68-b271-4b51-8439-46727f3445aa.png)
+
 ### Interface Images Sauvegardées - Dernière page
-![image](https://user-images.githubusercontent.com/83582338/138562552-be150101-383b-417c-affd-e33c6c6c9e1a.png)
+![Images_sauvegardées_derniere_page](https://user-images.githubusercontent.com/83582338/138562798-318fe8a8-34e6-4be4-9933-35808fcb245c.png)
+
 ### Interface Images Sauvegardées - Supprimer une image sauvegardée
-![image](https://user-images.githubusercontent.com/83582338/138562568-5efd6ebe-c750-497c-831d-74a5421023fe.png)
+![Images_sauvegardées_supprimer_image](https://user-images.githubusercontent.com/83582338/138562807-5d1335d3-68d1-4e26-90da-54d6efc946bf.png)
+
 ### Interface Images Sauvegardées - Bas de la dernière page
-![image](https://user-images.githubusercontent.com/83582338/138562578-7ce08c26-85ba-4a19-b0c7-6a7abc768d65.png)
+![Images_sauvegardées_image_supprimée_disparue_ap_reinit](https://user-images.githubusercontent.com/83582338/138562823-dcd149b6-ad38-416b-a6cc-933126062866.png)
+
+
 ### Interface Images Sauvegardées - Ni première ni dernière page
-![image](https://user-images.githubusercontent.com/83582338/138562585-e2d00a57-44a8-447a-983e-577eb4e54cd4.png)
+![Images_sauvegardées_en_bas_de_page_precedente](https://user-images.githubusercontent.com/83582338/138562845-1f772802-eb2e-40f8-ae42-42722378bbc4.png)
 
 ## Vidéo d'illustration (page d'accueil)
 
