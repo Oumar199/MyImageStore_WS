@@ -1,4 +1,4 @@
-from django.core import paginator
+# from django.core import paginator
 from django.http.response import JsonResponse
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
@@ -14,14 +14,12 @@ from bs4 import BeautifulSoup
 from django.shortcuts import get_object_or_404, render
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from store.models import Image
-import random
-import traceback
 from django.contrib.auth.models import User
 # from .forms import ContactForm
 from django.http import HttpResponse
 # Create your views here.
 def index(request):
-    '''Cette fonction permet d'afficher le contenu de l'acceuil de la plateforme
+    '''Cette fonction permet d'afficher l'acceuil de la plateforme
     Args:
         request(Any): Une requête envoyée à la fonction
     Returns:
@@ -33,7 +31,7 @@ def index(request):
 
 def listing(request):
     '''Cette fonction permet de lister toutes les images contenues dans la base de données grace au modele 'Image' créé à cet
-    effet. Puis la classe Paginator est utilisée pour la pagination des résultats
+    effet. La classe Paginator est utilisée pour la pagination des résultats.
     Args:
         request(Any): Une requête envoyée à la fonction
     Returns:
@@ -42,7 +40,7 @@ def listing(request):
     '''
     # Initialisation du driver 
     images_list = Image.objects.all().order_by('id')
-    paginator = Paginator(images_list, 9)
+    paginator = Paginator(images_list, 12)
     page = request.GET.get('page', 1)
     try:
         images = paginator.page(page)
@@ -60,7 +58,7 @@ def listing(request):
     
 
 def search(request):
-    """ Cette méthode doit récupérer les mots clés de la recherche et utiliser le web-Scraping pour prendre toutes 
+    """ Cette méthode doit récupérer les mots clés de la recherche et utiliser le web-Scraping pour récupérer (gratter) toutes 
     les résultats de Google Image correspondant aux termes de la recherche. Les résultats devront être retournés au gabarit
     search.html
     Args:
@@ -113,7 +111,7 @@ def search(request):
             # Récupération des élements de la page
             doc = BeautifulSoup(content, 'lxml')
             
-            # Récupération des liens contenu dans le div ou les résultats sont présents 
+            # Récupération des liens contenu dans le div où les résultats sont présents 
             links = [a for a in doc.find('div', class_ = "OcgH4b").find_all('a', class_ = ['wXeWr', 'islib', 'nfEiy'])]
             
             # Pour chaque lien effectuons des manipulations
@@ -194,20 +192,19 @@ def search(request):
             #         pass
             
         except Exception as e:
+            # fermer le driver de google chrome à la vue d'une erreur
+            driver.quit()
+            
+            # afficher l'erreur
             raise Exception("Erreur trouvée : %s"%(e))
+        finally:
+            # fermer le driver de google chrome après avoir terminé le web scraping
+            driver.quit()
         
     '''Le code mis en commentaire suivant nous permettait d'effectuer une pagination des résultats mais n'est pas valable 
     pour ce cas de figure assez complexe de Web-Scraping'''
-    # page = request.GET.get('page', 1)
-    # paginator = Paginator(images_list, 9)
-    # try:
-    #     images = paginator.page(page)
-    # except PageNotAnInteger:
-    #     images = paginator.page(1)
-    # except EmptyPage:
-    #     images = paginator.page(paginator.num_pages)
-    
-    # Affectation du titre de la page de résultats du site
+  
+    # Affectation du titre de la page de résultats de la recherche 
     title = "%d résultats pour la recherche '%s'"%(len(images_list), query)
     
     # Enregistrement du contexte sous forme de dictionnaire
@@ -232,6 +229,7 @@ def local_storage(objet: dict):
     '''
     characters = "éèê"
     categorie = objet["categorie"]
+    categorie = str.lower(categorie)
     for character in characters:
         categorie = categorie.replace(character, "e")
     categorie = categorie.replace("à", "a")

@@ -7,7 +7,7 @@
     
 {% block images %}
     <!-- {{message}} -->
-    {% include 'store/list.html'  with list_title="MY IMAGE <i class='ion-android-image text-dark'></i> STORE HOME" title="index"%}
+    {% include 'store/list.html'  with list_title="<i class='text-warning'>MY IMAGE</i> <i class='text-success'>  STORE</i>  <i class='text-danger'>HOME</i>" title="index"%}
 {% endblock images %}
 
 
@@ -16,7 +16,7 @@
     <div class="container">
         <div class="avatar" style="background-image:url(&quot;{% static 'store/assets/img/avatars/avatar.jpg' %}&quot;);"></div>
         <div class="about-me">
-            <p>Salut! Je suis <strong>Oumar Kane</strong>, étudiant en science de données. J'ai une grande passion pour la science. Ce site a été créé dans le cadre d'un projet de web scraping avec deux autres étudiants <strong>Abdoul Aziz Bâ</strong> et <strong>Mouhammad Diouf</strong>.</p>
+            <p>Salut! Je suis <strong>Oumar Kane</strong>, étudiant en science de données. J'ai une grande passion pour la science. Ce site a été créé dans le cadre d'un projet de web scraping avec <strong>Abdoul Aziz B&acirc;</strong>.</p>
             <!-- <a class="btn btn-outline-primary" role="button" href="#">Hire me</a> -->
         </div>
     </div>
@@ -26,7 +26,11 @@
 {% block javascript %}
 <script>
     $(function(){
-       $(".search_form_group_input").trigger("focus")
+        $('section.photography').innerHeight($(window).height() - 3.6*$('.navbar').height())
+        $(window).resize(function(){
+            $('section.photography').height($(window).height() - 3.6*$('.navbar').height())
+        })
+        $(".search_form_group_input").trigger("focus")
     });
 </script>
 {% endblock javascript %}

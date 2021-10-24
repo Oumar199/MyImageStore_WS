@@ -1,19 +1,12 @@
 
     
+    <div  class="col-lg-12">
+        <hr>
+        <h2 class="intro-text text-center text-info">{{ list_title }}</h2>
+        <hr class="detail-separator">
+    </div>
     {% if title == 'index'%}
-        <div  class="col-lg-12">
-            <hr>
-            <h2 class="intro-text text-center text-primary">{{ list_title }}</h2>
-            <hr class="detail-separator">
-        </div>
         {% include "store/search_form.html"  with title=title %}
-    {% else %}
-        
-        <div  class="col-lg-12">
-            <hr>
-            <h2 class="intro-text text-center">{{ list_title }}</h2>
-            <hr class="detail-separator">
-        </div>
     {% endif %}
     
     
@@ -73,14 +66,20 @@
             <nav class = "text-center" aria-label = "">
                 <ul class="pagination" style="display: block;">
                     {% if images.has_previous %}
-                        <li style="display: inline-block;"><a href="?page={{ images.previous_page_number }}" class="btn btn-danger">Précédent</a></li>
+                        <li style="display: inline-block;"><a href="?page=1" class="btn btn-dark"><i class="ion-android-arrow-dropleft"></i>1</a></li>
+                        <li style="display: inline-block;"><a href="?page={{ images.previous_page_number }}" class="btn btn-warning">Précédent</a></li>
                     {% endif %}
-                    {% if images.has_previous and images.has_next %}
-                    <hr style="display: inline-block;clear: both;margin-bottom: 0; margin-left: 20px; margin-right:20px;height: 30px;width: 2px;background: darkblue;">
-                    {% endif %}
-                    
+                    <!-- <hr> -->
+                    <!-- {% if images.has_previous and images.has_next %} -->
+                    <!-- <hr style="display: inline-block;clear: both;margin-bottom: 0; margin-left: 20px; margin-right:20px;height: 30px;width: 1.5px;background: darkblue;"> -->
+                    <span style="display: inline-block; cursor: default;" class="btn btn-outline-dark" disabled>Page {{images.number}}/{{images.paginator.num_pages}}</span>
+                    <!-- <hr style="display: inline-block;clear: both;margin-bottom: 0; margin-left: 20px; margin-right:20px;height: 30px;width: 1.5px;background: darkblue;"> -->
+                   
+                    <!-- {% endif %} -->
+                    <!-- <hr> -->
                     {% if images.has_next %}
                         <li style="display: inline-block;"><a href="?page={{ images.next_page_number }}" class="btn btn-warning">Suivant</a></li>
+                        <li><a href="?page={{ images.paginator.num_pages }}" class="btn btn-dark">{{ images.paginator.num_pages }} <i class=" ion-android-arrow-dropright"></i></a></li>
                     {% endif %}
                 </ul>
             </nav>
