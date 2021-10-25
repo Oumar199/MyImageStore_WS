@@ -1,0 +1,91 @@
+
+    
+    <div  class="col-lg-12">
+        <hr>
+        <h2 class="intro-text text-center text-info">{{ list_title }}</h2>
+        <hr class="detail-separator">
+    </div>
+    {% if title == 'index'%}
+        {% include "store/search_form.html"  with title=title %}
+    {% endif %}
+    
+    
+        
+    {% if images|length_is:"0" %}
+        <div class="col-md-12 col-lg-12 col-sm-5 text-center mt-5 mb-5 text-danger" >
+            <h3>
+                D&eacute;sol&eacute; nous n'avons trouv&eacute; aucune image.
+            </h3>
+            <p><h4 class="text-info">Voyons si le petit <i class="text-secondary"> le roi du pop </i> peut apporter une solution &agrave; ce problème.</h4></p>
+            <div class="embed-responsive embed-responsive-16by9">
+                <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/k4Nsh2P0EBY?rel=0" allowfullscreen></iframe>
+            </div>
+        </div>
+    {% else %}
+    {% for image in images %}
+    <!-- url 'store:detail' image_id = image.id -->
+    
+    <!-- {% if forloop.counter > 30 and not search|length_is:"4"%}
+        <div class="col-md-6 col-lg-4 text-center image reveal">
+    {% else %} -->
+        <div class="col-md-6 col-lg-4 text-center image">
+    <!-- {% endif %} -->
+        <div class="card border-0"><a href="{{image.url}}" target = "blanck"><img src="{{ image.src }}" alt="image.title" class="card-img-top scale-on-hover"></a>
+            <div class="card-body">
+                <h6><a class="image_title" href="{{image.url}}" target = "blanck">{{image.title}}</a></h6>
+                <form class="image_form" style="box-shadow: none!important; padding: 8px!important" action="{% url 'store:save' %}" method="GET">
+                        {% csrf_token %}
+                        <input type="hidden" name="title" value="{{image.title}}">
+                        <input type="hidden" name="categorie" value="{{image.categorie}}">
+                        <input type="hidden" name="url" value="{{image.url}}">
+                        <input type="hidden" name="src" value="{{image.src}}">
+                        
+                        {% if search|length_is:"4"%}
+                            <button type="button" class="image_form_save btn btn-primary btn-block btn-lg">Sauvegarder</button>
+                        {% else %}
+                            <button type="button" class="image_form_delete btn btn-info btn-block btn-lg">Supprimer</button>
+                        {% endif %}
+                            
+                </form>
+                <!-- <p class="text-muted card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc quam urna.</p> -->
+            </div>
+        </div>
+    </div>
+    
+    <!-- {% if forloop.counter|divisibleby:3 %}
+    <div class="clearfix"></div> 
+    {% endif %} -->
+    
+    {% endfor %}
+    
+    <!--  Rajout de navigation entre les pages -->
+    
+    {% if paginate %}
+        <div class="clearfix"></div>
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <nav class = "text-center" aria-label = "">
+                <ul class="pagination" style="display: block;">
+                    {% if images.has_previous %}
+                        <li style="display: inline-block;"><a href="?page=1" class="btn btn-dark"><i class="ion-android-arrow-dropleft"></i>1</a></li>
+                        <li style="display: inline-block;"><a href="?page={{ images.previous_page_number }}" class="btn btn-warning">Précédent</a></li>
+                    {% endif %}
+                    <!-- <hr> -->
+                    <!-- {% if images.has_previous and images.has_next %} -->
+                    <!-- <hr style="display: inline-block;clear: both;margin-bottom: 0; margin-left: 20px; margin-right:20px;height: 30px;width: 1.5px;background: darkblue;"> -->
+                    <span style="display: inline-block; cursor: default;" class="btn btn-outline-dark" disabled>Page {{images.number}}/{{images.paginator.num_pages}}</span>
+                    <!-- <hr style="display: inline-block;clear: both;margin-bottom: 0; margin-left: 20px; margin-right:20px;height: 30px;width: 1.5px;background: darkblue;"> -->
+                   
+                    <!-- {% endif %} -->
+                    <!-- <hr> -->
+                    {% if images.has_next %}
+                        <li style="display: inline-block;"><a href="?page={{ images.next_page_number }}" class="btn btn-warning">Suivant</a></li>
+                        <li><a href="?page={{ images.paginator.num_pages }}" class="btn btn-dark">{{ images.paginator.num_pages }} <i class=" ion-android-arrow-dropright"></i></a></li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>
+    {% endif %}
+        
+    {% endif %}
+    
+    

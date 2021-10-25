@@ -1,0 +1,89 @@
+{% extends 'store/base.html' %}
+
+<!-- {% block style %}
+    <style>
+        .reveal [class*='reveal_']{
+            opacity: 0;
+            transform: translateY(70px); 
+        }
+        .reveal_1{
+            transition: 1s cubic-bezier(.34,.27,.13,1.07);
+        }
+    </style>
+{% endblock style %}
+     -->
+<!-- {% block title %}
+    R&eacute;sultat de la recherche
+{% endblock title %} -->
+{% block images %}
+
+    <!-- {{message}} -->
+    {% include 'store/list.html'  with list_title=title search="True"%}
+{% endblock images %}
+
+
+{% block javascript %}
+<script>
+    $(function(){
+        console.log("{{ title }}")
+        $('body').append(`<button class = "dropup btn btn-primary" style = "position: fixed; display: none; bottom: 13px; right: 13px; font-size: 32px"><i class="ion-android-arrow-dropup-circle"></i></button>`)
+        if($(window).scrollTop() > 500){
+            $('.dropup').show()
+        }
+        $(window).scroll(function(e){
+            e.preventDefault()
+            if($(this).scrollTop() > 500){
+                $('.dropup').show()
+            }
+            else{
+                $('.dropup').hide()
+            }
+        })
+        $('.dropup').click(function(e){
+            e.preventDefault()
+            $(window).scrollTop(0)
+            $(this).hide()
+        })
+         
+        // Ajoutons une apparition des résultats lorsqu'elle sont visibles 
+        // let ratio = .1;
+        // let observer = new IntersectionObserver(function(entry){
+        //     entry.forEach(entries=>{
+        //         if(entries.intersectionRatio > ratio){
+        //             entries.target.classList.remove('reveal');
+        //         }
+        //     });
+        // },{
+        //     threshold: ratio
+        // });
+        // document.querySelectorAll('.reveal').forEach(element =>{
+        //     observer.observe(element);
+        // })
+    
+        $('.image_form_save').click(function (e) {
+            e.preventDefault();
+            var form = $(this).parent();
+            //var serialiseData = form.serialize() 
+            $.ajax({
+                url: `{% url 'store:save'%}`,
+                type: 'POST',
+                data: {
+                    title:form.find(`input[name="title"]`).val(),
+                    categorie:form.find(`input[name="categorie"]`).val(),
+                    src:form.find('input[name="src"]').val(),
+                    url:form.find(`input[name="url"]`).val(),
+                    csrfmiddlewaretoken: form.find("input[name=csrfmiddlewaretoken]").val()
+                },
+                success: (data)=>{
+                    console.log(data)
+                    $(this).addClass("btn-success").removeClass("btn-primary").attr('disabled', 'True').text("Sauvegardée")
+                },
+                error: ()=>{
+                    console.log('Erreur relevée')
+                }
+            }) 
+        });
+    });
+</script>
+{% endblock javascript %}
+    
