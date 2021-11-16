@@ -1,6 +1,7 @@
 # from django.core import paginator
 from django.http.response import JsonResponse
 from selenium import webdriver
+from selenium.webdriver.chrome import service
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
@@ -79,8 +80,11 @@ def search(request):
         # d'attente
         options.add_argument("--headless")
         
+        # On récupère le service
+        s = service.Service(executable_path="C:\Program Files\Chromedriver\chromedriver.exe")
+        
         # On récupère le driver
-        driver = webdriver.Chrome(executable_path="C:\Program Files\chromedriver\chromedriver.exe", options=options)
+        driver = webdriver.Chrome(service = s, options=options)
         
         # Affectation de l'url de Google Image à la variable url
         url = "https://www.google.sn/imghp?hl=fr&ogbl"
